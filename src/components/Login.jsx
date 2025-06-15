@@ -9,6 +9,7 @@ const Login = () => {
 
     const [emailId, setEmailId] = useState('abcd@mail.com');
     const [password, setPassword] = useState('Iamaboy@123');   
+    const [error, setError] = useState(null); // State to hold error messages
     const dispatch = useDispatch();
      const navigate = useNavigate();
 
@@ -25,6 +26,7 @@ const Login = () => {
             console.error("Login failed with status:", response.status);
         }
     }catch(error){
+        setError(error.response?.data);
         console.error("Login failed:", error);
     }}
 
@@ -40,7 +42,7 @@ const Login = () => {
 
                         <label className="label mt-4">Password</label>
                         <input type="password" className="input input-bordered w-full" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-
+                        {error && <p className="text-red-500 mt-2">{error}</p>} {/* Display error message if exists */}
                         <button className="btn btn-neutral mt-6 w-full" onClick={handleLogin}>Login</button>
                     </fieldset>
                 </div>
